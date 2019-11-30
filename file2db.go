@@ -6,7 +6,7 @@ import (
 	"os"
 )
 
-type Saver interface {
+type saver interface {
 	Save(meta *os.FileInfo, content []byte) error
 }
 
@@ -43,8 +43,8 @@ func (ss *sqlSaver) Save(meta *os.FileInfo, content []byte) error {
 	}
 }
 
-func save(meta *os.FileInfo, content []byte, s *sql.Stmt) {
-}
+func save(meta *os.FileInfo, content []byte, s saver) error { return s.Save(meta, content) }
 
 func file2db(f *os.File, s *sql.Stmt) {
+  save(nil, nil, &sqlSaver{ s: s })
 }
