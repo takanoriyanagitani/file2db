@@ -1,16 +1,48 @@
 language: go
 
-services:
-  - docker
-  
-dist: xenial
+matrix:
+  include:
+	  - go: 1.13.x
+		  addons:
+			  postgresql: "11"
+		  dist: bionic
+	  - go: 1.13.x
+		  addons:
+			  postgresql: "11"
+		  dist: xenial
+	  - go: 1.13.x
+		  addons:
+			  postgresql: "10"
+		  dist: xenial
+	  - go: 1.13.x
+		  addons:
+			  postgresql: "9.6"
+		  dist: xenial
+	  - go: 1.13.x
+		  addons:
+			  postgresql: "9.5"
+		  dist: xenial
+	  - go: 1.12.x
+		  addons:
+			  postgresql: "9.5"
+		  dist: xenial
+	  - go: 1.11.x
+		  addons:
+			  postgresql: "9.5"
+		  dist: xenial
+	  - go: 1.10.x
+		  addons:
+			  postgresql: "9.5"
+		  dist: xenial
+	  - go: 1.9.x
+		  addons:
+			  postgresql: "9.5"
+		  dist: xenial
 
-go:
-  - master
-  - 1.13.x
-  - 1.12.x
-  - 1.11.x
-  - 1.10.x
-  - 1.9.x
+before_script:
+  - psql --user postgres --command "CREATE TABLE test_filestore(fid BIGSERIAL PRIMARY KEY, meta JSONB, content BYTEA)"
+
+env:
+  - PGUSER=postgres PGDATABASE=postgres
 
 script: go test -cover
