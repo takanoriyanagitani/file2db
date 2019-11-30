@@ -6,22 +6,26 @@ import (
 	"time"
 )
 
+// time.Time.Unix() and time.Time.UnixNano() as json
 type TimeSpecJ struct {
 	Seconds int64 `json:"seconds"`
 	Nanos   int64 `json:"nanos"`
 }
 
+// os.File.Stat() as json
 type FileStatJ struct {
 	Mode     uint32    `json:"mode"`
 	Size     int64     `json:"size"`
 	Modified TimeSpecJ `json:"modified"`
 }
 
+// file meta info
 type FileMetaJ struct {
 	Name string    `json:"name"`
 	Stat FileStatJ `json:"stat"`
 }
 
+// file meta info and its contents
 type FileInfo struct {
 	Meta FileMetaJ
 	Data []byte
@@ -64,6 +68,8 @@ func loadFile(filename string, info *FileInfo, f *os.File) error {
 		return loadMeta(filename, info, f, b)
 	}
 }
+
+// load file into go object. assuming file is not nil.
 func LoadFile(filename string, file *FileInfo) error {
 	f, e := os.Open(filename)
 	defer f.Close()
