@@ -10,9 +10,9 @@ type Saver interface {
 	Save(meta *os.FileInfo, content []byte) error
 }
 
-type SqlSaver struct{ s *sql.Stmt }
+type sqlSaver struct{ s *sql.Stmt }
 
-func (ss *SqlSaver) CheckResultCount(i int64) error {
+func (ss *sqlSaver) CheckResultCount(i int64) error {
 	switch i {
 	default:
 		return fmt.Errorf("Unexpected error; rows affected: %v\n", i)
@@ -23,7 +23,7 @@ func (ss *SqlSaver) CheckResultCount(i int64) error {
 	}
 }
 
-func (ss *SqlSaver) CheckResult(r sql.Result) error {
+func (ss *sqlSaver) CheckResult(r sql.Result) error {
 	i, e := r.RowsAffected()
 	switch e {
 	default:
@@ -33,7 +33,7 @@ func (ss *SqlSaver) CheckResult(r sql.Result) error {
 	}
 }
 
-func (ss *SqlSaver) Save(meta *os.FileInfo, content []byte) error {
+func (ss *sqlSaver) Save(meta *os.FileInfo, content []byte) error {
 	r, e := ss.s.Exec()
 	switch e {
 	default:
