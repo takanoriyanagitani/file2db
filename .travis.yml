@@ -44,7 +44,8 @@ matrix:
       dist: xenial
 
 before_script:
-  - psql --user postgres --command "CREATE TABLE test_filestore(fid BIGSERIAL PRIMARY KEY, meta JSONB, content BYTEA)"
+  - psql --user postgres --command "CREATE TABLE test_filestore(name TEXT, modified BIGINT, meta JSONB, content BYTEA)"
+  - psql --user postgres --command "ALTER  TABLE test_filestore ADD CONSTRAINT test_filestore_pkc PRIMARY KEY(name, modified)"
 
 env:
   - PGUSER=postgres PGDATABASE=postgres
