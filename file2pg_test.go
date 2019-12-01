@@ -51,4 +51,29 @@ func TestFile2pg(t *testing.T) {
 	default:
 		t.Fatalf("Unable to drop test table file2pg.filestore: %v", e4)
 	}
+
+	s5, e5 := d.Prepare(`
+	  INSERT INTO file2pg.filestore(
+		  name,
+			size,
+			unix,
+			meta,
+			created_time
+		)
+		VALUES (
+		  $1::TEXT,
+			$2::BIGINT,
+			$3::BIGINT,
+			$4::JSONB,
+			CLOCK_TIMESTAMP()
+		)
+	`)
+	defer s5.Close()
+
+	switch e5 {
+	case nil:
+		break
+	default:
+		t.Fatalf("Unable to get prepared statement: %v\n", e5)
+	}
 }
