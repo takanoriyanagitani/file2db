@@ -11,8 +11,9 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/postgres:12
         environment:
-          PGSSLMODE: disable
-          POSTGRES_USER: postgres
+          PGSSLMODE:     disable
+          POSTGRES_USER: circleci
+          POSTGRES_DB:   circle_test
 
     working_directory: /go/src/github.com/takanoriyanagitani/file2db
     steps:
