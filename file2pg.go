@@ -7,7 +7,7 @@ import (
 )
 
 func file2pg(data []byte, s *sql.Stmt, j []byte) error {
-	r, e1 := s.Exec(j, data)
+	r, e1 := s.Exec(string(j), data)
 	switch e1 {
 	case nil:
 		break
