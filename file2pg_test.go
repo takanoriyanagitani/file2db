@@ -38,11 +38,11 @@ func TestFile2pg(t *testing.T) {
 		  name TEXT   NOT NULL,
 			size BIGINT NOT NULL,
 			unix BIGINT NOT NULL,
-			nano BIGINT NOT NULL,
+			sqno BIGSERIAL NOT NULL,
 			meta JSONB,
-			created_time TIMESTAMP WITH TIME ZONE,
+			created_time TIMESTAMP WITH TIME ZONE NOT NULL,
 			updated_time TIMESTAMP WITH TIME ZONE,
-			CONSTRAINT filestore_pkc PRIMARY KEY(name, size, unix, nano)
+			CONSTRAINT filestore_pkc PRIMARY KEY(name, size, unix, sqno)
 		)
 	`)
 	switch e4 {
