@@ -11,7 +11,6 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       - image: circleci/postgres:12
         environment:
-          PGSSLMODE:     disable
           POSTGRES_USER: circleci
           POSTGRES_DB:   circleci
 
@@ -21,4 +20,4 @@ jobs:
 
       # specify any bash command here prefixed with `run: `
       - run: go get -v -t -d ./...
-      - run: go test -v ./...
+      - run: PGSSLMODE=disable go test -v ./...

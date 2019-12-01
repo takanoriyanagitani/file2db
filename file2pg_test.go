@@ -24,4 +24,31 @@ func TestFile2pg(t *testing.T) {
 	default:
 		t.Fatalf("Unable to create test schema file2pg: %v", e2)
 	}
+
+	_, e3 := d.Exec(`DROP TABLE IF EXISTS file2pg.filestore`)
+	switch e3 {
+	case nil:
+		break
+	default:
+		t.Fatalf("Unable to drop test table file2pg.filestore: %v", e3)
+	}
+
+	_, e4 := d.Exec(`
+	  CREATE TABLE IF NOT EXISTS file2pg.filestore(
+		  name TEXT   NOT NULL,
+			size BIGINT NOT NULL,
+			unix BIGINT NOT NULL,
+			nano BIGINT NOT NULL,
+			meta JSONB,
+			created_time TIMESTAMP WITH TIME ZONE,
+			updated_time TIMESTAMP WITH TIME ZONE,
+			CONSTRAINT filestore_pkc PRIMARY KEY(name, size, unix, nano)
+		)
+	`)
+	switch e4 {
+	case nil:
+		break
+	default:
+		t.Fatalf("Unable to drop test table file2pg.filestore: %v", e4)
+	}
 }
