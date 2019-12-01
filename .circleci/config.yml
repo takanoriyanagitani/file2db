@@ -13,7 +13,7 @@ jobs:
         environment:
           PGSSLMODE:     disable
           POSTGRES_USER: circleci
-          POSTGRES_DB:   circle_test
+          POSTGRES_DB:   circleci
 
     working_directory: /go/src/github.com/takanoriyanagitani/file2db
     steps:
